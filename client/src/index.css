@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-border: #EAEAEA;
+  --color-text: #1A1A1A;
+  --color-muted: #6B7280;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(200%); }
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #FAFAFA;
+  color: #1A1A1A;
+}

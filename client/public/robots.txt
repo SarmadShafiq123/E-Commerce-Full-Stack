@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Block private/admin pages
+Disallow: /admin/
+Disallow: /checkout
+Disallow: /order-success
+Disallow: /orders/
+Disallow: /profile
+Disallow: /auth/
+
+Sitemap: https://luxebags.store/sitemap.xml
