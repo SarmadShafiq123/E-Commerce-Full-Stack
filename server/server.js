@@ -29,6 +29,7 @@ connectDB();
 const app = express();
 
 // ── Security headers ──────────────────────────────────────────────────────────
+app.set('trust proxy', 1);
 app.use(helmet());
 
 // ── CORS — must come before cookie-parser so preflight works ─────────────────
@@ -101,4 +102,20 @@ app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// ── Global Error Handling (Prevent crash loops) ──────────────────────────────
+process.on('uncaughtException', (err) => {
+  console.error('UNCAUGHT EXCEPTION! 💥');
+  console.error(err.name, err.message, err.stack);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (err) => {
+  console.error('UNHANDLED REJECTION! 💥');
+  console.error(err.name, err.message, err.stack);
+  // Optional: gracefully shut down
+  server.close(() => {
+    process.exit(1);
+  });
+});

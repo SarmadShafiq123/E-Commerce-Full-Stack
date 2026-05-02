@@ -33,6 +33,9 @@ export const getHomepage = asyncHandler(async (req, res) => {
     .filter(isSlideVisible)
     .sort((a, b) => a.order - b.order);
 
+  // Prevent browser caching so updates show immediately
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+
   res.json({
     topBar: doc.topBar,
     heroSlider: visibleSlides,
@@ -125,7 +128,7 @@ export const updateSlide = asyncHandler(async (req, res) => {
   // If a new image was uploaded, delete the old one from Cloudinary
   if (req.file) {
     if (slide.imagePublicId) {
-      await cloudinary.uploader.destroy(slide.imagePublicId).catch(() => {});
+      await cloudinary.uploader.destroy(slide.imagePublicId).catch(() => { });
     }
     slide.image = req.file.path;
     slide.imagePublicId = req.file.filename;
@@ -159,7 +162,7 @@ export const deleteSlide = asyncHandler(async (req, res) => {
   }
 
   if (slide.imagePublicId) {
-    await cloudinary.uploader.destroy(slide.imagePublicId).catch(() => {});
+    await cloudinary.uploader.destroy(slide.imagePublicId).catch(() => { });
   }
 
   slide.deleteOne();

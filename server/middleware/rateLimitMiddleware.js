@@ -20,10 +20,10 @@ export const registerLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-/** General API fallback — 100 requests per 15 min per IP */
+/** General API fallback — 500 requests per 15 min per IP */
 export const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 500,
   message: rateLimitMessage,
   standardHeaders: true,
   legacyHeaders: false,
